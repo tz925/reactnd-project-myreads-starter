@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Book extends Component {
+  state = {
+    shelf: this.props.book.shelf
+  }
   static propTypes = {
     book: PropTypes.object,
     onChangeShelf: PropTypes.func,
@@ -11,6 +14,7 @@ class Book extends Component {
     event.preventDefault()
     if (this.props.onChangeShelf) {
       this.props.onChangeShelf(this.props.book, event.target.value)
+      this.setState({shelf: event.target.value})
     }
   }
 
@@ -23,7 +27,7 @@ class Book extends Component {
             <div className="book-top">
               <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: 'url({book.imageLinks.thumbnail})' }}></div>
               <div className="book-shelf-changer">
-                <select onChange={this.handleSelect} value={book.shelf}>
+                <select onChange={this.handleSelect} value={this.state.shelf}>
                   <option value="none">Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="wantToRead" >Want to Read</option>
